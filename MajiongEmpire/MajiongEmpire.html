@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  
+  <!-- external css -->
+  <link rel="stylesheet" href="css/myStyle.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  
+  <!-- external js -->
+  <script src="js/myJS.js"></script>
+  <script src="js/jquery-1.11.1.js"></script>
+  <!--<script src="js/bootstrap.min.js"></script>-->
+</head>
+<title>MajiongEmpire on Web</title>
+
+<body> 
+  <!-- 提供音效 -->
+  <audio id="my-sound" src=""  autoplay></audio>
+  <!-- 消息框 -->
+  <div class="msg-panel to-hide">
+    <p class="msg-title">消息标题</p>
+    <table style="width:100%">
+      <tr>
+        <td><img class="msg-pic" src="" /></td>
+        <td><p class="msg-body">我是初始消息内容，看到我说明你发现了一个错误哦 :)</p></td>
+      </tr>
+    </table>    
+  </div>
+
+  <!-- 战斗记录框 -->
+  <div class="history-panel">
+    <p class="history-title">战斗记录</p>
+    <div class="history-content">
+    </div>
+  </div>
+  
+  <!-- 设置unit选择界面 -->
+  <div class="setunit-panel to-hide">
+    <p class="setunit-title">设置战斗单位</p>
+    <p class="setunit-subtitle">英 雄 单 位：</p>
+    <table style="width:100%">
+      <tr>
+      <td><img class="img-setunit img-circle" id="setunit-1" src="static/img/unitzs.png" onclick="painter.chooseUnit(this.id)" title="战 士(单体高伤害/控制)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-2" src="static/img/unitlr.png" onclick="painter.chooseUnit(this.id)" title="游 侠(群体伤害/控制)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-3" src="static/img/unitsm.png" onclick="painter.chooseUnit(this.id)" title="萨 满(全体增益效果/反馈伤害)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-4" src="static/img/unitws.png" onclick="painter.chooseUnit(this.id)" title="武 僧(一击必杀/自我减伤)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-5" src="static/img/unitdz.png" onclick="painter.chooseUnit(this.id)" title="刺 客(高暴击/回能量)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-6" src="static/img/unitfs.png" onclick="painter.chooseUnit(this.id)" title="魔 法 师(免疫伤害/群体伤害)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-7" src="static/img/unitxd.png" onclick="painter.chooseUnit(this.id)" title="德 鲁 伊(变形术/交换生命值)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-8" src="static/img/unitdk.png" onclick="painter.chooseUnit(this.id)" title="死 亡 骑 士(吸血/群体伤害)" /></td>
+      </tr>
+      <tr>
+      <td><img class="img-setunit img-circle" id="setunit-9" src="static/img/unitqs.png" onclick="painter.chooseUnit(this.id)" title="圣 骑 士(交换生命值/回复生命值)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-10" src="static/img/unitms.png" onclick="painter.chooseUnit(this.id)" title="牧 师(回复生命值/全体增益效果)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-11" src="static/img/unitsr.png" onclick="painter.chooseUnit(this.id)" title="吟 游 诗 人(增益效果/减益效果)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-13" src="static/img/unitjb.png" onclick="painter.chooseUnit(this.id)" title="酒 保(控制/增益效果)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-14" src="static/img/unityd.png" onclick="painter.chooseUnit(this.id)" title="园 丁(群体伤害/回复效果)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-15" src="static/img/unityx.png" onclick="painter.chooseUnit(this.id)" title="夜 行 者(高速度/多次攻击)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-16" src="static/img/unittf.png" onclick="painter.chooseUnit(this.id)" title="屠 夫(群体伤害/增益效果)" /></td>
+      </tr>
+      <tr>
+      <td><img class="img-setunit img-circle" id="setunit-12" src="static/img/unitpc.png" onclick="painter.chooseUnit(this.id)" title="破 城 者(高群体伤害)" /></td>
+      <td><img class="img-setunit img-circle" id="setunit-17" src="static/img/unitmo.png" onclick="painter.chooseUnit(this.id)" title="木 偶(伤害加成/高生命值)" /></td>
+      </tr>
+    </table>
+    <p class="setunit-subtitle">士 兵：</p>
+    <table width="100%">
+      <tr>
+      <td><img class="img-setunit img-circle" id="setunit-100" src="static/img/unitrangera.png" onclick="painter.chooseUnit(this.id)" title="骑 兵" /></td>
+      <td></td>
+      <td><img class="img-setunit img-circle" id="setunit-200" src="static/img/unitsola.png" onclick="painter.chooseUnit(this.id)" title="步 兵" /></td>
+      <td></td>
+      <td><img class="img-setunit img-circle" id="setunit-0" src="static/img/nounit.png" onclick="painter.chooseUnit(this.id)" title="不设置" /></td>
+      <td></td>
+      </tr>
+    </table>
+    <br/>
+  </div>
+
+  <!-- 设置mount选择界面 -->
+  <div class="setmount-panel to-hide">
+    <p class="setmount-title">设置坐骑</p>
+    <table style="width:100%">
+      <tr>
+      <td><img class="img-setmount img-circle" id="setmount-1" src="static/img/mountghost.png" onclick="painter.chooseMount(this.id)" title="幽 灵 马" /></td>
+      <td><img class="img-setmount img-circle" id="setmount-2" src="static/img/mounthorse.png" onclick="painter.chooseMount(this.id)" title="马 匹" /></td>
+      <td><img class="img-setmount img-circle" id="setmount-0" src="static/img/nomount.png" onclick="painter.chooseMount(this.id)" title="不设置" /></td>
+      </tr>
+    </table>
+    <br/>
+  </div>
+
+  <!-- 动作主选择界面 -->
+  <div class="action-panel to-hide">
+    <table style="width:100%;">
+      <tr>
+        <td style="width:40%">
+          <p style="text-align:center;" id="action-no">X方</p>
+          <p style="text-align:center;"><i class="fa fa-heart"></i> <span class="unit-hp" id="action-hp">X/</span><span class="unit-maxhp" id="action-maxhp">X</span><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="action-sp">X/</span><span class="unit-maxsp" id="action-maxsp">X</span></p>
+          <div class="box-unit"><img class="img-thumbnail" id="img-unit" src="" /></div>
+        </td>
+        <td style="width:60%">
+          <p id="title-top" class="title">通用技能：</p>
+          <div class="row">
+            <div class="col-md-4" id="skill-1" ></div>
+            <div class="col-md-4" id="skill-2" ></div>
+            <div class="col-md-4"></div>
+          </div>
+          <p id="title-middle" class="title">主动技能：</p>
+          <div class="row">
+            <div class="col-md-4" id="skill-3"></div>
+            <div class="col-md-4" id="skill-4"></div>
+            <div class="col-md-4"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" id="skill-7"><img class="skill-icon-sm" src="" onmouseover="painter.showSkilltip(event,this.id)" onmouseout="painter.hideSkilltip(this.id)" /></div>
+            <div class="col-md-4" id="skill-8"><img class="skill-icon-sm" src="" onmouseover="painter.showSkilltip(event,this.id)" onmouseout="painter.hideSkilltip(this.id)" /></div>
+            <div class="col-md-4" id="skill-9"><img class="skill-icon-sm" src="" onmouseover="painter.showSkilltip(event,this.id)" onmouseout="painter.hideSkilltip(this.id)" /></div>
+          </div>
+          <p id="title-bottom" class="title">被动技能(自动触发)：</p>
+          <div class="row">
+            <div class="col-md-4" id="skill-5"></div>
+            <div class="col-md-4" id="skill-6"></div>
+            <div class="col-md-4"></div>
+          </div>
+          <br/>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 技能提示框 -->
+  <div class="skill-panel to-hide">
+    <p id="skill-name" class="skill-title">技能名称</p>
+    <p id="skill-quote" class="skill-quote">需要X SP / XX状态 / 无法驱散</p>
+    <p id="skill-def" class="skill-def">这里是技能描述，如果你看到我说明你发现了一个错误 :)</p>
+  </div>
+
+  <!-- 选择目标界面 -->
+  <div class="target-panel to-hide">
+    <p class="target-title">选择目标</p>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+        <img class="target-unit" id="tar-0" src="" onclick="controller.locateTarget(this.id)" onmousedown="painter.toSmall(this.id)" onmouseup="painter.toBig(this.id)" />
+        <p class="check-icon" id="check-0"></p>
+      </div>
+      <div class="col-md-2">
+        <img class="target-unit " id="tar-1" src="" onclick="controller.locateTarget(this.id)" onmousedown="painter.toSmall(this.id)" onmouseup="painter.toBig(this.id)" />
+        <p class="check-icon" id="check-1"></p>
+      </div>
+      <div class="col-md-2">
+        <img class="target-unit " id="tar-2" src="" onclick="controller.locateTarget(this.id)" onmousedown="painter.toSmall(this.id)" onmouseup="painter.toBig(this.id)" />
+        <p class="check-icon" id="check-2"></p>
+      </div>
+      <div class="col-md-2">
+        <img class="target-unit " id="tar-3" src="" onclick="controller.locateTarget(this.id)" onmousedown="painter.toSmall(this.id)" onmouseup="painter.toBig(this.id)" />
+        <p class="check-icon" id="check-3"></p>
+      </div>
+      <div class="col-md-2">
+        <img class="target-unit " id="tar-4" src="" onclick="controller.locateTarget(this.id)" onmousedown="painter.toSmall(this.id)" onmouseup="painter.toBig(this.id)" />
+        <p class="check-icon" id="check-4"></p>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="row" style="margin-bottom: 8px;">
+      <div class="col-md-4">
+        <p class="tip-skill"><i class="fa fa-flash"></i> 正在使用: <img src="" style="width:18px;height:18px;" />技能名称</p>
+      </div>
+      <div class="col-md-1"></div>
+      <div type="button" class="col-md-2 btn btn-sm btn-primary" onclick="controller.doSkill()">确 认</div>
+      <div class="col-md-1"></div>
+      <div class="col-md-4">
+        <p class="tip-usedtar">已选择 X/X 目标</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 主页面 -->
+  <!-- 功能按钮组 -->
+  <div type="button" class="btn btn-sm btn-default" id="draw-button" onclick="startDraw()" style="margin-left:50px">先后手</div>
+  <div type="button" class="btn btn-sm btn-default disabled" id="battle-button" onclick="startBattle()">战斗开始</div>
+  <div type="button" class="btn btn-sm btn-primary disabled" id="action-button" onclick="controller.findNext()">-------- 行 动 --------</div>
+  <div type="button" class="btn btn-sm btn-default" id="dice-button" onclick="controller.playSound('static/audio/dice.wav');painter.showMsg('你扔出了 '+controller.rollDice(6)+' 点');" style="margin-left:50px">试试手气</div>
+  <div type="button" class="btn btn-sm btn-default" onclick="reportDPS()">查看实时伤害统计</div>
+  <!-- <div type="button" class="btn btn-sm btn-default" onclick="test()">TEST</div> -->
+  <!-- layers 1-buff/debuff/hp/sp/mount icons 2-buff/debuff number 3-YY/anger/enhance/taunt/tree effects 4-unit image 5-iceblock effect 6-faint/slow/poison/confuse effects 7-pointing/damage effects 8-hp calculating effect -->
+  <div class="page-main">
+  <!-- 单位 1 -->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-0-boxhp" style="left:10px;top:50px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-0-hp">X/</span><span class="unit-maxhp" id="unit-0-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-0-iceblock" style="left:68px;top:50px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-0-taunt" style="left:98px;top:50px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-0-anger" style="left:128px;top:50px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-0-boxsp" style="left:160px;top:50px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-0-sp">X/</span><span class="unit-maxsp" id="unit-0-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-0-enhance" style="left:10px;top:75px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-0-yy" style="left:10px;top:108px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-0-yynum" style="left:10px;top:108px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-0-earth" style="left:10px;top:141px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-0-tiger" style="left:10px;top:174px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-0-bear" style="left:10px;top:207px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-0-tree" style="left:10px;top:240px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-0-bgyy" style="left:45px;top:85px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-0-bganger" style="left:45px;top:85px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-0-bgenhance" style="left:45px;top:85px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-0-bgtaunt" style="left:45px;top:85px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-0-bgtree" style="left:45px;top:85px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-0-pic" style="left:55px;top:95px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-0-bgiceblock" style="left:45px;top:85px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-0-bgdeath" style="left:45px;top:85px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-0-dam" style="left:55px;top:95px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-0-hpminus" style="left:55px;top:95px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-0-drunk" style="left:185px;top:75px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-0-faint" style="left:185px;top:108px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-0-confuse" style="left:185px;top:141px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-0-confusenum" style="left:185px;top:141px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-0-poison" style="left:185px;top:174px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-0-poisonnum" style="left:185px;top:174px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-0-slow" style="left:185px;top:207px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-0-bind" style="left:185px;top:240px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-0-mt" style="left:45px;top:245px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+    <!-- 单位 2-->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-1-boxhp" style="left:230px;top:50px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-1-hp">X</span><span class="unit-maxhp" id="unit-1-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-1-iceblock" style="left:288px;top:50px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-1-taunt" style="left:318px;top:50px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-1-anger" style="left:348px;top:50px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-1-boxsp" style="left:380px;top:50px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-1-sp">X</span><span class="unit-maxsp" id="unit-1-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-1-enhance" style="left:230px;top:75px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-1-yy" style="left:230px;top:108px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-1-yynum" style="left:230px;top:108px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-1-earth" style="left:230px;top:141px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-1-tiger" style="left:230px;top:174px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-1-bear" style="left:230px;top:207px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-1-tree" style="left:230px;top:240px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-1-bgyy" style="left:265px;top:85px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-1-bganger" style="left:265px;top:85px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-1-bgenhance" style="left:265px;top:85px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-1-bgtaunt" style="left:265px;top:85px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-1-bgtree" style="left:265px;top:85px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-1-pic" style="left:275px;top:95px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-1-bgiceblock" style="left:265px;top:85px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-1-bgdeath" style="left:265px;top:85px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-1-dam" style="left:275px;top:95px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-1-hpminus" style="left:275px;top:95px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-1-drunk" style="left:405px;top:75px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-1-faint" style="left:405px;top:108px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-1-confuse" style="left:405px;top:141px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-1-confusenum" style="left:405px;top:141px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-1-poison" style="left:405px;top:174px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-1-poisonnum" style="left:405px;top:174px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-1-slow" style="left:405px;top:207px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-1-bind" style="left:405px;top:240px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-1-mt" style="left:265px;top:245px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+    <!-- 单位 3-->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-2-boxhp" style="left:450px;top:50px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-2-hp">X</span><span class="unit-maxhp" id="unit-2-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-2-iceblock" style="left:508px;top:50px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-2-taunt" style="left:538px;top:50px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-2-anger" style="left:568px;top:50px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-2-boxsp" style="left:600px;top:50px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-2-sp">X</span><span class="unit-maxsp" id="unit-2-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-2-enhance" style="left:450px;top:75px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-2-yy" style="left:450px;top:108px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-2-yynum" style="left:450px;top:108px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-2-earth" style="left:450px;top:141px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-2-tiger" style="left:450px;top:174px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-2-bear" style="left:450px;top:207px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-2-tree" style="left:450px;top:240px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-2-bgyy" style="left:485px;top:85px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-2-bganger" style="left:485px;top:85px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-2-bgenhance" style="left:485px;top:85px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-2-bgtaunt" style="left:485px;top:85px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-2-bgtree" style="left:485px;top:85px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-2-pic" style="left:495px;top:95px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-2-bgiceblock" style="left:485px;top:85px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-2-bgdeath" style="left:485px;top:85px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-2-dam" style="left:495px;top:95px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-2-hpminus" style="left:495px;top:95px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-2-drunk" style="left:625px;top:75px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-2-faint" style="left:625px;top:108px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-2-confuse" style="left:625px;top:141px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-2-confusenum" style="left:625px;top:141px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-2-poison" style="left:625px;top:174px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-2-poisonnum" style="left:625px;top:174px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-2-slow" style="left:625px;top:207px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-2-bind" style="left:625px;top:240px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-2-mt" style="left:485px;top:245px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+    <!-- 单位 4-->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-3-boxhp" style="left:670px;top:50px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-3-hp">X</span><span class="unit-maxhp" id="unit-3-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-3-iceblock" style="left:728px;top:50px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-3-taunt" style="left:758px;top:50px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-3-anger" style="left:788px;top:50px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-3-boxsp" style="left:820px;top:50px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-3-sp">X</span><span class="unit-maxsp" id="unit-3-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-3-enhance" style="left:670px;top:75px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-3-yy" style="left:670px;top:108px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-3-yynum" style="left:670px;top:108px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-3-earth" style="left:670px;top:141px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-3-tiger" style="left:670px;top:174px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-3-bear" style="left:670px;top:207px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-3-tree" style="left:670px;top:240px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-3-bgyy" style="left:705px;top:85px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-3-bganger" style="left:705px;top:85px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-3-bgenhance" style="left:705px;top:85px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-3-bgtaunt" style="left:705px;top:85px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-3-bgtree" style="left:705px;top:85px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-3-pic" style="left:715px;top:95px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-3-bgiceblock" style="left:705px;top:85px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-3-bgdeath" style="left:705px;top:85px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-3-dam" style="left:715px;top:95px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-3-hpminus" style="left:715px;top:95px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-3-drunk" style="left:845px;top:75px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-3-faint" style="left:845px;top:108px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-3-confuse" style="left:845px;top:141px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-3-confusenum" style="left:845px;top:141px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-3-poison" style="left:845px;top:174px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-3-poisonnum" style="left:845px;top:174px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-3-slow" style="left:845px;top:207px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-3-bind" style="left:845px;top:240px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-3-mt" style="left:705px;top:245px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+    <!-- 单位 5-->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-4-boxhp" style="left:890px;top:50px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-4-hp">X</span><span class="unit-maxhp" id="unit-4-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-4-iceblock" style="left:948px;top:50px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-4-taunt" style="left:978px;top:50px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-4-anger" style="left:1008px;top:50px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-4-boxsp" style="left:1040px;top:50px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-4-sp">X</span><span class="unit-maxsp" id="unit-4-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-4-enhance" style="left:890px;top:75px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-4-yy" style="left:890px;top:108px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-4-yynum" style="left:890px;top:108px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-4-earth" style="left:890px;top:141px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-4-tiger" style="left:890px;top:174px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-4-bear" style="left:890px;top:207px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-4-tree" style="left:890px;top:240px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-4-bgyy" style="left:925px;top:85px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-4-bganger" style="left:925px;top:85px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-4-bgenhance" style="left:925px;top:85px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-4-bgtaunt" style="left:925px;top:85px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-4-bgtree" style="left:925px;top:85px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-4-pic" style="left:935px;top:95px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-4-bgiceblock" style="left:925px;top:85px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-4-bgdeath" style="left:925px;top:85px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-4-dam" style="left:935px;top:95px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-4-hpminus" style="left:935px;top:95px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-4-drunk" style="left:1065px;top:75px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-4-faint" style="left:1065px;top:108px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-4-confuse" style="left:1065px;top:141px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-4-confusenum" style="left:1065px;top:141px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-4-poison" style="left:1065px;top:174px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-4-poisonnum" style="left:1065px;top:174px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-4-slow" style="left:1065px;top:207px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-4-bind" style="left:1065px;top:240px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-4-mt" style="left:925px;top:245px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+    <!-- 单位 6 -->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-5-boxhp" style="left:10px;top:380px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-5-hp">X</span><span class="unit-maxhp" id="unit-5-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-5-iceblock" style="left:68px;top:380px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-5-taunt" style="left:98px;top:380px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-5-anger" style="left:128px;top:380px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-5-boxsp" style="left:160px;top:380px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-5-sp">X</span><span class="unit-maxsp" id="unit-5-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-5-enhance" style="left:10px;top:405px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-5-yy" style="left:10px;top:438px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-5-yynum" style="left:10px;top:438px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-5-earth" style="left:10px;top:471px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-5-tiger" style="left:10px;top:504px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-5-bear" style="left:10px;top:537px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-5-tree" style="left:10px;top:570px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-5-bgyy" style="left:45px;top:415px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-5-bganger" style="left:45px;top:415px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-5-bgenhance" style="left:45px;top:415px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-5-bgtaunt" style="left:45px;top:415px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-5-bgtree" style="left:45px;top:415px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-5-pic" style="left:55px;top:425px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-5-bgiceblock" style="left:45px;top:415px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-5-bgdeath" style="left:45px;top:415px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-5-dam" style="left:55px;top:425px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-5-hpminus" style="left:55px;top:425px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-5-drunk" style="left:185px;top:405px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-5-faint" style="left:185px;top:438px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-5-confuse" style="left:185px;top:471px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-5-confusenum" style="left:185px;top:471px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-5-poison" style="left:185px;top:504px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-5-poisonnum" style="left:185px;top:504px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-5-slow" style="left:185px;top:537px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-5-bind" style="left:185px;top:570px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-5-mt" style="left:45px;top:575px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+    <!-- 单位 7-->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-6-boxhp" style="left:230px;top:380px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-6-hp">X</span><span class="unit-maxhp" id="unit-6-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-6-iceblock" style="left:288px;top:380px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-6-taunt" style="left:318px;top:380px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-6-anger" style="left:348px;top:380px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-6-boxsp" style="left:380px;top:380px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-6-sp">X</span><span class="unit-maxsp" id="unit-6-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-6-enhance" style="left:230px;top:405px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-6-yy" style="left:230px;top:438px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-6-yynum" style="left:230px;top:438px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-6-earth" style="left:230px;top:471px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-6-tiger" style="left:230px;top:504px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-6-bear" style="left:230px;top:537px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-6-tree" style="left:230px;top:570px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-6-bgyy" style="left:265px;top:415px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-6-bganger" style="left:265px;top:415px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-6-bgenhance" style="left:265px;top:415px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-6-bgtaunt" style="left:265px;top:415px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-6-bgtree" style="left:265px;top:415px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-6-pic" style="left:275px;top:425px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-6-bgiceblock" style="left:265px;top:415px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-6-bgdeath" style="left:265px;top:415px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-6-dam" style="left:275px;top:425px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-6-hpminus" style="left:275px;top:425px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-6-drunk" style="left:405px;top:405px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-6-faint" style="left:405px;top:438px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-6-confuse" style="left:405px;top:471px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-6-confusenum" style="left:405px;top:471px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-6-poison" style="left:405px;top:504px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-6-poisonnum" style="left:405px;top:504px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-6-slow" style="left:405px;top:537px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-6-bind" style="left:405px;top:570px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-6-mt" style="left:265px;top:575px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+    <!-- 单位 8-->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-7-boxhp" style="left:450px;top:380px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-7-hp">X</span><span class="unit-maxhp" id="unit-7-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-7-iceblock" style="left:508px;top:380px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-7-taunt" style="left:538px;top:380px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-7-anger" style="left:568px;top:380px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-7-boxsp" style="left:600px;top:380px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-7-sp">X</span><span class="unit-maxsp" id="unit-7-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-7-enhance" style="left:450px;top:405px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-7-yy" style="left:450px;top:438px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-7-yynum" style="left:450px;top:438px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-7-earth" style="left:450px;top:471px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-7-tiger" style="left:450px;top:504px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-7-bear" style="left:450px;top:537px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-7-tree" style="left:450px;top:570px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-7-bgyy" style="left:485px;top:415px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-7-bganger" style="left:485px;top:415px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-7-bgenhance" style="left:485px;top:415px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-7-bgtaunt" style="left:485px;top:415px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-7-bgtree" style="left:485px;top:415px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-7-pic" style="left:495px;top:425px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-7-bgiceblock" style="left:485px;top:415px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-7-bgdeath" style="left:485px;top:415px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-7-dam" style="left:495px;top:425px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-7-hpminus" style="left:495px;top:425px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-7-drunk" style="left:625px;top:405px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-7-faint" style="left:625px;top:438px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-7-confuse" style="left:625px;top:471px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-7-confusenum" style="left:625px;top:471px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-7-poison" style="left:625px;top:504px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-7-poisonnum" style="left:625px;top:504px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-7-slow" style="left:625px;top:537px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-7-bind" style="left:625px;top:570px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-7-mt" style="left:485px;top:575px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+    <!-- 单位 9-->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-8-boxhp" style="left:670px;top:380px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-8-hp">X</span><span class="unit-maxhp" id="unit-8-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-8-iceblock" style="left:728px;top:380px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-8-taunt" style="left:758px;top:380px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-8-anger" style="left:788px;top:380px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-8-boxsp" style="left:820px;top:380px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-8-sp">X</span><span class="unit-maxsp" id="unit-8-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-8-enhance" style="left:670px;top:405px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-8-yy" style="left:670px;top:438px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-8-yynum" style="left:670px;top:438px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-8-earth" style="left:670px;top:471px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-8-tiger" style="left:670px;top:504px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-8-bear" style="left:670px;top:537px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-8-tree" style="left:670px;top:570px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-8-bgyy" style="left:705px;top:415px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-8-bganger" style="left:705px;top:415px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-8-bgenhance" style="left:705px;top:415px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-8-bgtaunt" style="left:705px;top:415px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-8-bgtree" style="left:705px;top:415px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-8-pic" style="left:715px;top:425px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-8-bgiceblock" style="left:705px;top:415px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-8-bgdeath" style="left:705px;top:415px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-8-dam" style="left:715px;top:425px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-8-hpminus" style="left:715px;top:425px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-8-drunk" style="left:845px;top:405px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-8-faint" style="left:845px;top:438px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-8-confuse" style="left:845px;top:471px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-8-confusenum" style="left:845px;top:471px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-8-poison" style="left:845px;top:504px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-8-poisonnum" style="left:845px;top:504px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-8-slow" style="left:845px;top:537px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-8-bind" style="left:845px;top:570px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-8-mt" style="left:705px;top:575px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+    <!-- 单位 10-->
+    <!-- 显示HP -->
+    <p class="layer-1" id="unit-9-boxhp" style="left:890px;top:380px;height:25px;"><i class="fa fa-heart"></i><span class="unit-hp" id="unit-9-hp">X</span><span class="unit-maxhp" id="unit-9-maxhp">X</span></p>
+    <!-- 显示iceblock图标 -->
+    <img class="layer-1 buff-icon" id="unit-9-iceblock" style="left:948px;top:380px;" src="static/img/iceblock.png" title="寒冰屏障(免疫直接伤害 / 无法驱散)" />
+    <!-- 显示taunt图标 -->
+    <img class="layer-1 buff-icon" id="unit-9-taunt" style="left:978px;top:380px;" src="static/img/taunt.png" title="嘲讽(必须优先攻击他)" />
+    <!-- 显示anger图标 -->
+    <img class="layer-1 buff-icon" id="unit-9-anger" style="left:1008px;top:380px;" src="static/img/anger.png" title="激怒(下次攻击必定暴击!)" />
+    <!-- 显示SP -->
+    <p class="layer-1" id="unit-9-boxsp" style="left:1040px;top:380px;height:25px;width:50px;text-align:right;"><i class="fa fa-flash fa-lg"></i> <span class="unit-sp" id="unit-9-sp">X</span><span class="unit-maxsp" id="unit-9-maxsp">X</span></p>
+    <!-- 显示enhance -->
+    <img class="layer-1 buff-icon" id="unit-9-enhance" style="left:890px;top:405px;" src="static/img/enhance.png" title="强化(最大生命值提高)" />
+    <!-- 显示YY -->
+    <img class="layer-1 buff-icon" id="unit-9-yy" style="left:890px;top:438px;" src="static/img/yy.png" title="英勇(暂时提高全体生命值上限与速度)" />
+    <p class="layer-2 buff-num" id="unit-9-yynum" style="left:890px;top:438px;" title="英勇(暂时提高全体生命值上限与速度)">X</p>
+    <!-- 显示earth -->
+    <img class="layer-1 buff-icon" id="unit-9-earth" style="left:890px;top:471px;" src="static/img/earth.png" title="大地之力(反伤)" />
+    <!-- 显示tiger -->
+    <img class="layer-1 buff-icon" id="unit-9-tiger" style="left:890px;top:504px;" src="static/img/tiger.png" title="变形:虎形态(伤害提升)" />
+    <!-- 显示bear -->
+    <img class="layer-1 buff-icon" id="unit-9-bear" style="left:890px;top:537px;" src="static/img/bear.png" title="变形:熊形态(嘲讽，伤害减免)" />
+    <!-- 显示tree -->
+    <img class="layer-1 buff-icon" id="unit-9-tree" style="left:890px;top:570px;" src="static/img/tree.png" title="变形:树形态(全体回复)" />
+    <!-- 显示背景 -->
+    <img class="layer-3 " id="unit-9-bgyy" style="left:925px;top:415px;" src="static/img/bgyy.png" />
+    <img class="layer-3 " id="unit-9-bganger" style="left:925px;top:415px;" src="static/img/bganger.png" />
+    <img class="layer-3 " id="unit-9-bgenhance" style="left:925px;top:415px;" src="static/img/bgenhance.png" />
+    <img class="layer-3 " id="unit-9-bgtaunt" style="left:925px;top:415px;" src="static/img/bgtaunt.png" />
+    <img class="layer-3 " id="unit-9-bgtree" style="left:925px;top:415px;" src="static/img/bgtree.png" />
+    <!-- 显示unit -->
+    <img class="layer-4 unit-pic" id="unit-9-pic" style="left:935px;top:425px;" src="static/img/nounit.png" onclick="painter.popSetunit(this.id)" />
+    <!-- 显示ICEBLOCK -->
+    <img class="layer-5 " id="unit-9-bgiceblock" style="left:925px;top:415px;opacity:0.65;" src="static/img/bgiceblock.png" />
+    <!-- 显示死亡 -->
+    <p class="layer-6 bgdeath" id="unit-9-bgdeath" style="left:925px;top:415px;">-死 亡-</p>
+    <!-- 显示伤害效果 -->
+    <img class="layer-7 effect-dam" id="effect-9-dam" style="left:935px;top:425px;" src="static/img/effdam.png" />
+    <!-- 显示扣血效果 -->
+    <p class="layer-8 effect-hpminus" id="effect-9-hpminus" style="left:935px;top:425px;">- X</p>
+    <!-- 显示drunk -->
+    <img class="layer-1 buff-icon" id="unit-9-drunk" style="left:1065px;top:405px;" src="static/img/drunk.png" title="醉酒(无法行动!)" />
+    <!-- 显示faint -->
+    <img class="layer-1 buff-icon" id="unit-9-faint" style="left:1065px;top:438px;" src="static/img/faint.png" title="眩晕(无法行动!)" />
+    <!-- 显示confuse -->
+    <img class="layer-1 buff-icon" id="unit-9-confuse" style="left:1065px;top:471px;" src="static/img/confuse.png" title="蛊惑" />
+    <p class="layer-2 buff-num" id="unit-9-confusenum" style="left:1065px;top:471px;" title="蛊惑">X</p>
+    <!-- 显示poison -->
+    <img class="layer-1 buff-icon" id="unit-9-poison" style="left:1065px;top:504px;" src="static/img/poison.png" title="中毒(受到持续自然伤害)" />
+    <p class="layer-2 buff-num" id="unit-9-poisonnum" style="left:1065px;top:504px;" title="中毒(受到持续伤害)">X</p>
+    <!-- 显示slow -->
+    <img class="layer-1 buff-icon" id="unit-9-slow" style="left:1065px;top:537px;" src="static/img/slow.png" title="减速(行动迟缓)" />
+    <!-- 显示bind -->
+    <img class="layer-1 buff-icon" id="unit-9-bind" style="left:1065px;top:570px;" src="static/img/bind.png" title="致命藤蔓(受到持续自然伤害)" />
+    <!-- 显示mount -->
+    <img class="layer-1 mount-pic" id="unit-9-mt" style="left:925px;top:575px;" src="static/img/nomount.png" onclick="painter.popSetmount(this.id)" />
+
+  </div>
+<script>
+  $(document).ready(function(){
+    $(".to-hide").hide();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+* {
+  font-family: "冬青黑体","Calibri","Microsoft YaHei", sans-serif; */
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  cursor: url("../static/cur/normal.cur"), default;
+}
+
+img {
+  border-radius: 4px;
+}
+
+/*图层使用*/
+.layer-1 {
+  position: fixed;
+  display: none;
+  z-index: 6000;
+}
+.layer-2 {
+  position: fixed;
+  display: none;
+  z-index: 6050;
+}
+.layer-3 {
+  position: fixed;
+  display: none;
+  z-index: 6100;
+}
+.layer-4 {
+  position: fixed;
+  z-index: 6500;
+}
+.layer-5 {
+  position: fixed;
+  display: none;
+  z-index: 6600;
+}
+.layer-6 {
+  position: fixed;
+  display: none;
+  z-index: 6700;
+}
+.layer-7 {
+  position: fixed;
+  display: none;
+  z-index: 6800;
+}
+.layer-8 {
+  position: fixed;
+  display: none;
+  z-index: 6900;
+}
+
+/*信息栏*/
+div.msg-panel {
+  position: fixed;
+  left: 50px;
+  top: 50px;
+  width: 350px;
+  height: 110px;
+
+  background-color: rgba(255,255,255,1);
+  border: 2px solid rgba(124,156,188,1);
+  border-radius: 4px;
+
+  z-index: 9000;
+}
+
+p.msg-title {
+  /*margin-top: 5px;*/
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  
+  color: rgba(255,255,255,1);
+  background-color: rgba(124,156,188,1);
+
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+img.msg-pic {
+  margin-left: 5px;
+  margin-right: 5px;
+
+  width: 40px;
+  height: 40px;
+}
+
+p.msg-body {
+  text-align: center;
+
+  font-size: 12px;
+}
+
+/*战斗历史框*/
+div.history-panel {
+  position: fixed;
+  right: 0;
+  top: 10px;
+  width: 200px;
+
+  border: 1px solid rgba(124,156,188,1);
+  border-radius: 4px;
+}
+
+p.history-title {
+  width: 100%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  
+  color: rgba(255,255,255,1);
+  background-color: rgba(124,156,188,1);
+
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+div.history-content {
+}
+
+p.history-item {
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 2px;
+  
+  color: rgba(142,136,130,1);
+  
+  font-size: 10px;
+}
+
+/*技能主面板*/
+div.action-panel {
+  position: fixed;
+  left: 50px;
+  top: 50px;
+  width: 400px;
+  max-height: 350px;
+  
+  background-color: rgba(255,255,255,1);
+  border: 10px solid rgba(124,156,188,1);
+  border-radius: 4px;
+  
+  box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+
+  z-index: 8000;
+}
+
+div.box-unit {
+  margin-left: 10px;
+}
+
+img#img-unit {
+  width: 110px;
+  height: 130px;
+}
+
+p#title-top,p#title-middle,p#title-bottom {
+  margin-top: 10px;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+img.skill-icon {
+  width: 50px;
+  height: 50px;
+}
+
+img.skill-icon-sm {
+  width: 32px;
+  height: 32px;
+
+  margin-top:5px;
+}
+
+/*技能提示栏*/
+div.skill-panel {
+  position: fixed;
+  left: 0;
+  top: 0;
+  max-width: 400px;
+
+  border: 1px solid rgba(0,0,0,1);
+  border-radius: 2px;
+
+  color: white;
+  background-color: rgba(0,0,0,1);
+  
+  box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+
+  z-index: 8500;
+}
+
+p.skill-title {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 15px;
+}
+
+p.skill-quote {
+  color: rgba(255,0,0,1);
+  font-size: 10px;
+  font-style: italic;
+  padding-left: 15px;
+}
+
+p.skill-def {
+  color: rgba(220,220,220,1);
+  font-size: 12px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/*设置unit选择主界面*/
+div.setunit-panel,div.setmount-panel {
+  position: fixed;
+  left: 50px;
+  top: 50px;
+  width: 600px;
+
+  border: 1px solid rgba(124,156,188,1);
+  border-radius: 4px;
+  background-color: rgba(255,255,255,1);
+  /*background-color: rgba(207,210,123,1);*/
+
+  box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+
+  z-index: 8600;
+}
+
+p.setunit-title,p.setmount-title {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  color: rgba(255,255,255,1);
+  background-color: rgba(124,156,188,1);
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+p.setunit-subtitle {
+  padding-left: 5px;
+
+  font-weight: bold;
+}
+
+img.img-setunit,img.img-setmount {
+  width: 75px;
+  height: 75px;
+
+  padding: 8px;
+}
+
+
+
+/*选择目标主界面*/
+div.target-panel {
+  position: fixed;
+  left: 50px;
+  top: 50px;
+  width: 600px;
+
+  border: 1px solid rgba(124,156,188,1);
+  border-radius: 4px;
+
+  /*color: white;*/
+  background-color: rgba(255,255,255,1);
+  
+  box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+
+  z-index: 8600;
+}
+
+p.target-title {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  color: rgba(255,255,255,1);
+  background-color: rgba(124,156,188,1);
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+img.target-unit {
+  width: 70px;
+  height: 85px;
+  margin-top: 8px;
+  margin-bottom: 5px;
+
+  cursor: url("../static/cur/atk.cur"), default;
+
+  box-shadow: 0 0 2px 2px rgba(0,0,0,.35);
+}
+
+p.check-icon {
+  width: 100%;
+  
+  color: rgba(0,163,0,1);
+  text-align: center;
+}
+
+p.tip-skill {
+  width: 100%;
+  
+  padding-left: 10px;
+  text-align: left;
+  font-size: 12px;
+}
+
+p.tip-usedtar {
+  width: 100%;
+
+  padding-right: 10px;
+  text-align: right;
+  font-size: 12px;
+}
+
+/*主页面*/
+img.unit-pic {
+  width: 110px;
+  height: 130px;
+}
+
+img.mount-pic {
+  width: 130px;
+  height: 20px;
+}
+
+.buff-icon {
+  width: 25px;
+  height: 25px;
+
+  border-radius: 4px;
+}
+
+span.unit-hp,span.unit-sp {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+span.unit-maxhp,span.unit-maxsp {
+  font-size: 14px;
+/*  font-weight: bold;*/
+  font-style: italic;
+}
+
+p.buff-num {
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: rgba(255,255,255,1);
+  text-shadow: 1px 1px 1px rgba(0,0,0,1);
+}
+
+p.effect-hpminus {
+  width: 110px;
+  
+  color: rgba(255,0,0,1);
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,1);
+
+  transition: top .7s;
+  -moz-transition: top .7s;  /* Firefox 4 */
+  -webkit-transition: top .7s; /* Safari 和 Chrome */
+  -o-transition: top .7s;  /* Opera */
+}
+
+p.bgdeath {
+  width: 130px;
+  height: 150px;
+  line-height:150px;
+  
+  color: rgba(255,255,255,1);
+  background-color:rgba(160,160,160,0.5);
+  border-radius:3px;
+
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+  text-shadow:2px 2px 3px rgba(0,0,0,1);
+}

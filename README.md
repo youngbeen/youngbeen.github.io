@@ -1,4 +1,7 @@
 
-# Hello
+# 站点索引说明
 
-welcome
+| index    | 描述      |
+|:-------- |:-------- |
+| `index`  | 索引页，主页 |
+| `MajiongEmpire`  | 原MajiongEmpire HTML页 |

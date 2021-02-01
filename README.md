@@ -5,3 +5,4 @@
 |:-------- |:-------- |
 | `index`  | 索引页，主页 |
 | `MajiongEmpire`  | 原MajiongEmpire HTML页 |
+| `workitcompare`  | Workit主题对比 |

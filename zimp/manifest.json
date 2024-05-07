@@ -3,7 +3,7 @@
   "name": "Zombie in my pocket",
   "icons": [
     {
-      "src": "/game_logo.png",
+      "src": "/zimp/game_logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }

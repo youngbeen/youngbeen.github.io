@@ -7,7 +7,11 @@ self.addEventListener('install', event => {
     console.log('sw works correctly')
     cache.addAll([
       // '/',
-      'https://img2.imgtp.com/2024/05/07/bJxHXZ4R.jpg' // characters
+      'https://img2.imgtp.com/2024/05/06/KIYjLdMm.png',
+      'https://img2.imgtp.com/2024/05/06/UE2y82Q1.jpg',
+      'https://img2.imgtp.com/2024/05/07/bJxHXZ4R.jpg',
+      'https://img2.imgtp.com/2024/05/07/6jT5fj1K.jpg',
+      'https://img2.imgtp.com/2024/05/07/f88h8vky.jpg'
       // '/converter.js',
       // '/converter.css'
     ])

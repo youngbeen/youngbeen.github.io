@@ -1,0 +1,17 @@
+{
+  "short_name": "Guess Numbers",
+  "name": "Guess Numbers",
+  "icons": [
+    {
+      "src": "/guess-numbers/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#000",
+  "theme_color": "rgb(165, 165, 255)",
+  "orientation": "portrait",
+  "scope": "/guess-numbers/"
+}
